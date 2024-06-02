@@ -2,6 +2,59 @@
 
 Just copy past the code below to add the component source code:
 
+Add this atributes in tailwind.config.ts
+
+```js
+import type { Config } from 'tailwindcss';
+
+const colors = require('tailwindcss/colors');
+
+const {
+	default: flattenColorPalette,
+} = require('tailwindcss/lib/util/flattenColorPalette');
+
+const config: Config = {
+	content: [
+		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
+		'./components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./app/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/**/*.{js,ts,jsx,tsx,mdx}',
+	],
+	darkMode: 'class',
+	theme: {
+		extend: {
+			animation: {
+				marquee: 'marquee var(--duration) infinite linear',
+			},
+			keyframes: {
+				marquee: {
+					'0%': {
+						transform: 'translateX(0)',
+					},
+					'100%': {
+						transform: 'translateX(calc(-100% - var(--gap)))',
+					},
+				},
+			},
+		},
+	},
+	plugins: [addVariablesForColors],
+};
+
+function addVariablesForColors({ addBase, theme }: any) {
+	let allColors = flattenColorPalette(theme('colors'));
+	let newVars = Object.fromEntries(
+		Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+	);
+
+	addBase({
+		':root': newVars,
+	});
+}
+
+export default config;
+```
+
 ```js
 import clsx from 'clsx';
 import Image from 'next/image';
