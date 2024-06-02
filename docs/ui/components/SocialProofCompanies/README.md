@@ -23,19 +23,19 @@ const config: Config = {
 	darkMode: 'class',
 	theme: {
 		extend: {
-			- animation: {
-			- 	marquee: 'marquee var(--duration) infinite linear',
-			- },
-			- keyframes: {
-			-  marquee: {
-			- 		'0%': {
-			- 			transform: 'translateX(0)',
-			- 		},
-			- 		'100%': {
-			- 			transform: 'translateX(calc(-100% - var(--gap)))',
-			- 		},
-			- 	},
-			- },
+			animation: {
+				marquee: 'marquee var(--duration) infinite linear',
+			},
+			keyframes: {
+				marquee: {
+					'0%': {
+						transform: 'translateX(0)',
+					},
+					'100%': {
+						transform: 'translateX(calc(-100% - var(--gap)))',
+					},
+				},
+			},
 		},
 	},
 	plugins: [addVariablesForColors],
