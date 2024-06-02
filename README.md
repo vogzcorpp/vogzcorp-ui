@@ -19,20 +19,7 @@ Copy/past a vogzcorpUI components from github
 
 An example for the SocialProofCompanies components
 
-```javascript
-import { SocialProofCompanies } from 'vogzcorpUI';
-
-function App() {
-	return <SocialProofCompanies elems={array} />;
-}
-
-const array = [
-	{
-		name: 'vogzcorp',
-		logo: '/vogzcorp.svg', // return the file from public folder (nextjs)
-	},
-];
-```
+See docs/ui/components/SocialProofCompanies
 
 ## Features
 
