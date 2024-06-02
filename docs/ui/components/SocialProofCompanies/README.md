@@ -23,19 +23,19 @@ const config: Config = {
 	darkMode: 'class',
 	theme: {
 		extend: {
-			animation: {
-				marquee: 'marquee var(--duration) infinite linear',
-			},
-			keyframes: {
-				marquee: {
-					'0%': {
-						transform: 'translateX(0)',
-					},
-					'100%': {
-						transform: 'translateX(calc(-100% - var(--gap)))',
-					},
-				},
-			},
+			- animation: {
+			- 	marquee: 'marquee var(--duration) infinite linear',
+			- },
+			- keyframes: {
+			-  marquee: {
+			- 		'0%': {
+			- 			transform: 'translateX(0)',
+			- 		},
+			- 		'100%': {
+			- 			transform: 'translateX(calc(-100% - var(--gap)))',
+			- 		},
+			- 	},
+			- },
 		},
 	},
 	plugins: [addVariablesForColors],
@@ -62,6 +62,7 @@ import React from 'react';
 
 const SocialProofCompanies = ({
 	elems,
+	header,
 	type,
 	dark = 'from-zinc-900',
 	light = 'from-white',
@@ -70,6 +71,7 @@ const SocialProofCompanies = ({
 		label?: string,
 		logo?: string,
 	}[],
+	header?: string,
 	type: 'toggle' | 'dark' | 'light' | 'default',
 	dark?: string,
 	light?: string,
@@ -95,7 +97,12 @@ const SocialProofCompanies = ({
 							alt={items.label ?? ''}
 							width={100}
 							height={0}
-							className="h-max w-28 dark:brightness-0 dark:invert"
+							className={clsx(
+								'h-max w-28',
+								type == 'dark'
+									? 'brightness-0 invert'
+									: 'dark:brightness-0 dark:invert',
+							)}
 							key={items.label}
 						/>
 					);
@@ -105,26 +112,35 @@ const SocialProofCompanies = ({
 	};
 
 	return (
-		<div className="relative mt-6 max-w-[800px]">
-			<div className="group flex overflow-hidden p-2 [--gap:3rem] [gap:var(--gap)] flex-row max-w-full [--duration:30s]">
-				<Comp />
-				<Comp />
-				<Comp />
-				<Comp />
+		<>
+			{header !== undefined ? (
+				<h3 className="text-center text-sm uppercase font-semibold text-neutral-500">
+					{header}
+				</h3>
+			) : (
+				<></>
+			)}
+			<div className="relative mt-6">
+				<div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row max-w-[800px] [--duration:40s]">
+					<Comp />
+					<Comp />
+					<Comp />
+					<Comp />
+				</div>
+				<div
+					className={clsx(
+						'pointer-events-none absolute inset-y-0 left-0 h-full w-1/3 bg-gradient-to-r',
+						toogleState,
+					)}
+				></div>
+				<div
+					className={clsx(
+						'pointer-events-none absolute inset-y-0 right-0 h-full w-1/3 bg-gradient-to-l',
+						toogleState,
+					)}
+				></div>
 			</div>
-			<div
-				className={clsx(
-					'pointer-events-none absolute inset-y-0 left-0 h-full w-1/3 bg-gradient-to-r',
-					toogleState,
-				)}
-			></div>
-			<div
-				className={clsx(
-					'pointer-events-none absolute inset-y-0 right-0 h-full w-1/3 bg-gradient-to-l',
-					toogleState,
-				)}
-			></div>
-		</div>
+		</>
 	);
 };
 
@@ -148,6 +164,15 @@ function App() {
             dark="black"
           />
           // Supports dark and light mode but you need to specify "light" and "dark" args
+
+          <SocialProofCompanies
+            elems={array}
+            header={"powered by"}
+            type="toogle"
+            light="white"
+            dark="black"
+          />
+          //add a header
 
           ///#####################################################################
           ///###########################OTHER SETTINGS############################
